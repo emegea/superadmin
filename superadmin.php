@@ -47,6 +47,7 @@ function superadmin_enqueue_admin_assets($hook) {
 
     wp_enqueue_style('superadmin-admin-style', SUPERADMIN_URL . 'assets/css/admin.css', [], '1.0');
     wp_enqueue_script('superadmin-admin-js', SUPERADMIN_URL . 'assets/js/admin.js', ['jquery'], '1.0', true);
+    wp_enqueue_media();
 }
 add_action('admin_enqueue_scripts', 'superadmin_enqueue_admin_assets');
 
