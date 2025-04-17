@@ -73,7 +73,7 @@ $contact_info = new SuperAdmin_ContactInfo();
 
                 <?php submit_button('Guardar Información'); ?>
             </form>
-        </div>
+        </div><!-- Columna 1 -->
         <script>
         jQuery(document).ready(function($){
             $('#add-social-btn').on('click', function(e){
@@ -126,13 +126,18 @@ $contact_info = new SuperAdmin_ContactInfo();
                     </select>
                 </p>
                 <p>
+                    <label for="superadmin_login_button_color">Color del botón de login:</label><br>
+                    <input type="color" id="superadmin_login_button_color" name="superadmin_login_button_color" value="<?php echo esc_attr(get_option('superadmin_login_button_color', '#2271b1')); ?>">
+                </p>
+                <p>
                     <label for="superadmin_login_footer_text">Texto inferior:</label><br>
                     <input type="text" id="superadmin_login_footer_text" name="superadmin_login_footer_text" value="<?php echo esc_attr(get_option('superadmin_login_footer_text', '')); ?>" class="regular-text">
                 </p>
 
                 <?php submit_button('Guardar Personalización Login'); ?>
             </form>
-        </div>
+        </div><!-- Columna 2 -->
+
         <script>
         jQuery(document).ready(function($){
             var mediaUploader;
@@ -165,74 +170,95 @@ $contact_info = new SuperAdmin_ContactInfo();
                 });
                 bgUploader.open();
             });
+            if (isset($_POST['superadmin_login_button_color'])) {
+                update_option('superadmin_login_button_color', sanitize_hex_color($_POST['superadmin_login_button_color']));
+            }
         });
         </script>
 
         <!-- Columna 3: Gestión de Menús -->
         <div class="superadmin-columnaTres">
             <h2>Gestión de Menús por Rol</h2>
-            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                <?php wp_nonce_field('guardar_menu_roles', 'superadmin_nonce'); ?>
-                <input type="hidden" name="action" value="guardar_menu_roles">
-
-                <?php
-                global $wp_roles, $menu, $submenu;
-                $roles = $wp_roles->roles;
-                foreach ($roles as $role_key => $role_info):
+            <div class="superadmin-roles-tabs">
+                <ul class="roles-tabs-nav">
+                    <?php foreach ($roles as $role_key => $role_info): ?>
+                        <li><a href="#" class="role-tab-link" data-role="<?php echo esc_attr($role_key); ?>"><?php echo esc_html($role_info['name']); ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php foreach ($roles as $role_key => $role_info): 
                     $menus_guardados = get_option("superadmin_menus_{$role_key}", []);
-                    ?>
-                    <fieldset style="margin-bottom:20px;">
-                        <legend><strong><?php echo esc_html($role_info['name']); ?></strong></legend>
+                ?>
+                <div class="role-tab-content" id="role-tab-<?php echo esc_attr($role_key); ?>" style="display:none;">
+                    <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                        <?php wp_nonce_field('guardar_menu_roles', 'superadmin_nonce'); ?>
+                        <input type="hidden" name="action" value="guardar_menu_roles">
                         <ul class="superadmin-menu-list">
-                            <?php
-                            foreach ($menu as $item) {
-                                $slug = $item[2];
-                                $name = strip_tags($item[0]);
-                                if ($slug === 'index.php') continue; // Opcional: omitir escritorio
-                                ?>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="menus_roles[<?php echo esc_attr($role_key); ?>][]" value="<?php echo esc_attr($slug); ?>" <?php checked(in_array($slug, $menus_guardados)); ?>>
-                                        <?php echo esc_html($name); ?>
-                                    </label>
-                                    <?php
-                                    if (!empty($submenu[$slug])) {
-                                        echo '<ul class="superadmin-submenu-list" style="display:none;">';
-                                        foreach ($submenu[$slug] as $subitem) {
-                                            $subslug = $subitem[2];
-                                            $subname = strip_tags($subitem[0]);
-                                            ?>
-                                            <li>
-                                                <label>
-                                                    <input type="checkbox" name="menus_roles[<?php echo esc_attr($role_key); ?>][]" value="<?php echo esc_attr($subslug); ?>" <?php checked(in_array($subslug, $menus_guardados)); ?>>
-                                                    <?php echo esc_html($subname); ?>
-                                                </label>
-                                            </li>
-                                            <?php
-                                        }
-                                        echo '</ul>';
-                                        echo '<button type="button" class="toggle-submenu button-link">Mostrar/Ocultar submenú</button>';
-                                    }
-                                    ?>
-                                </li>
-                                <?php
-                            }
+                        <?php
+                        foreach ($menu as $item) {
+                            $slug = $item[2];
+                            $name = strip_tags($item[0]);
+                            $has_children = !empty($submenu[$slug]);
                             ?>
+                            <li class="parent-menu-item<?php if ($has_children) echo ' has-children'; ?>">
+                                <span class="menu-parent-label" style="cursor:pointer;">
+                                    <?php if ($has_children): ?><span class="toggle-icon">▶</span><?php endif; ?>
+                                    <?php echo esc_html($name); ?>
+                                </span>
+                                <label style="margin-left:10px;">
+                                    <input type="checkbox" name="menus_roles[<?php echo esc_attr($role_key); ?>][]" value="<?php echo esc_attr($slug); ?>" <?php checked(in_array($slug, $menus_guardados)); ?>>
+                                </label>
+                                <?php
+                                if ($has_children) {
+                                    echo '<ul class="superadmin-submenu-list" style="display:none; margin-left:20px;">';
+                                    foreach ($submenu[$slug] as $subitem) {
+                                        $subslug = $subitem[2];
+                                        $subname = strip_tags($subitem[0]);
+                                        ?>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="menus_roles[<?php echo esc_attr($role_key); ?>][]" value="<?php echo esc_attr($subslug); ?>" <?php checked(in_array($subslug, $menus_guardados)); ?>>
+                                                <?php echo esc_html($subname); ?>
+                                            </label>
+                                        </li>
+                                        <?php
+                                    }
+                                    echo '</ul>';
+                                }
+                                ?>
+                            </li>
+                            <?php
+                        }
+                        ?>
                         </ul>
-                    </fieldset>
+                        <?php submit_button('Guardar Configuración de Menús'); ?>
+                    </form>
+                </div>
                 <?php endforeach; ?>
-
-                <?php submit_button('Guardar Configuración de Menús'); ?>
-            </form>
-        </div>
+            </div>
+        </div><!-- Columna 3 -->
         <script>
-        jQuery(document).ready(function($){
-            $('.toggle-submenu').on('click', function(e){
-                e.preventDefault();
-                $(this).prev('.superadmin-submenu-list').slideToggle();
+            jQuery(document).ready(function($){
+                // Tabs para roles
+                $('.role-tab-link').on('click', function(e){
+                    e.preventDefault();
+                    var role = $(this).data('role');
+                    $('.role-tab-content').hide();
+                    $('#role-tab-' + role).show();
+                    $('.role-tab-link').removeClass('active');
+                    $(this).addClass('active');
+                });
+                // Mostrar el primer tab por defecto
+                $('.role-tab-link').first().trigger('click');
+
+                // Submenú desplegable al hacer click en el padre
+                $('.parent-menu-item.has-children .menu-parent-label').on('click', function(){
+                    var submenu = $(this).closest('.parent-menu-item').find('.superadmin-submenu-list');
+                    submenu.slideToggle();
+                    var icon = $(this).find('.toggle-icon');
+                    icon.text(icon.text() === '▶' ? '▼' : '▶');
+                });
             });
-        });
         </script>
 
-    </div>
+    </div><!-- .superadmin-columns-containe -->
 </div>

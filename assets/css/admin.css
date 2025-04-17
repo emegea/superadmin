@@ -32,3 +32,33 @@
   background: #fff;
   box-sizing: border-box;
 }
+
+.roles-tabs-nav {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.roles-tabs-nav li {
+  margin-right: 10px;
+}
+.role-tab-link {
+  display: block;
+  padding: 8px 16px;
+  background: #f1f1f1;
+  color: #333;
+  border-radius: 4px 4px 0 0;
+  text-decoration: none;
+}
+.role-tab-link.active {
+  background: #fff;
+  border-bottom: 2px solid #2271b1;
+  color: #2271b1;
+}
+.parent-menu-item.has-children .toggle-icon {
+  font-weight: bold;
+  margin-right: 5px;
+}
+.superadmin-submenu-list {
+  margin-top: 5px;
+}
