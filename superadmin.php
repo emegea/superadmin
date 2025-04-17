@@ -40,14 +40,25 @@ add_action('plugins_loaded', function () {
 
 // Encolar scripts y estilos admin
 function superadmin_enqueue_admin_assets($hook) {
-    // Solo cargar en página del plugin (ajusta 'toplevel_page_superadmin' si cambias slug)
+    // Asegúrate de que sea solo en la página del plugin
     if ($hook !== 'toplevel_page_superadmin') {
         return;
     }
-
-    wp_enqueue_style('superadmin-admin-style', SUPERADMIN_URL . 'assets/css/admin.css', [], '1.0');
-    wp_enqueue_script('superadmin-admin-js', SUPERADMIN_URL . 'assets/js/admin.js', ['jquery'], '1.0', true);
+    
+    // Cargar scripts de la media library
     wp_enqueue_media();
+    
+    // CSS
+    wp_enqueue_style('superadmin-admin-style', plugins_url('assets/css/admin.css', __FILE__), [], '1.0');
+    
+    // JS (con jQuery como dependencia)
+    wp_enqueue_script(
+        'superadmin-admin-js',
+        plugins_url('assets/js/admin.js', __FILE__),
+        ['jquery'],
+        '1.0',
+        true
+    );
 }
 add_action('admin_enqueue_scripts', 'superadmin_enqueue_admin_assets');
 

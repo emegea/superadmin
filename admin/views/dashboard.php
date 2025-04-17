@@ -88,15 +88,18 @@ $contact_info = new SuperAdmin_ContactInfo();
             <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                 <?php wp_nonce_field('guardar_custom_login', 'superadmin_nonce'); ?>
                 <input type="hidden" name="action" value="guardar_custom_login">
+                <!-- Logo del login -->
                 <p>
                     <label>Logo del login:</label><br>
-                    <img id="login-logo-preview" src="<?php echo esc_url(get_option('superadmin_login_logo_url', '')); ?>" style="max-width:100px; display:block; margin-bottom:10px;">
+                    <img id="login-logo-preview" src="<?php echo esc_url(get_option('superadmin_login_logo_url', '')); ?>" style="max-width:100px;">
                     <input type="hidden" id="superadmin_login_logo_url" name="superadmin_login_logo_url" value="<?php echo esc_attr(get_option('superadmin_login_logo_url', '')); ?>">
                     <button type="button" class="button" id="upload-login-logo">Seleccionar logo</button>
                 </p>
+
+                <!-- Imagen de fondo -->
                 <p>
                     <label>Imagen de fondo:</label><br>
-                    <img id="login-bg-preview" src="<?php echo esc_url(get_option('superadmin_login_bg_url', '')); ?>" style="max-width:100px; display:block; margin-bottom:10px;">
+                    <img id="login-bg-preview" src="<?php echo esc_url(get_option('superadmin_login_bg_url', '')); ?>" style="max-width:100px;">
                     <input type="hidden" id="superadmin_login_bg_url" name="superadmin_login_bg_url" value="<?php echo esc_attr(get_option('superadmin_login_bg_url', '')); ?>">
                     <button type="button" class="button" id="upload-login-bg">Seleccionar imagen de fondo</button>
                 </p>
