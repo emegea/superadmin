@@ -15,7 +15,9 @@ $contact_info = new SuperAdmin_ContactInfo();
 <div class="notice notice-success is-dismissible">
     <p>¡Ajustes guardados correctamente!</p>
 </div>
-<div class="wrap superadmin-wrap">
+    
+    <div class="wrap superadmin-wrap">
+
     <?php if (isset($_GET['message'])): ?>
         <div class="notice notice-success is-dismissible">
             <p>
@@ -32,6 +34,7 @@ $contact_info = new SuperAdmin_ContactInfo();
             </p>
         </div>
     <?php endif; ?>
+
     <div class="superadmin-columns-container" style="display:flex; gap:20px;">
         <!-- Columna 1: Información de contacto -->
         <div class="superadmin-columnaUno">
@@ -265,5 +268,5 @@ $contact_info = new SuperAdmin_ContactInfo();
             });
         </script>
 
-    </div><!-- .superadmin-columns-container -->
+    </div><!-- .superadmin-columns-containe -->
 </div>
