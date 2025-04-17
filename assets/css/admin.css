@@ -1,11 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+* {
+  transition: linear .1s;
+  font-family: 'Inter', sans-serif;
+}
+*:hover {
+  transition: linear .1s;
+}
+#logo {
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  align-items: center;
+  padding: 10px 20px;
+  background: #C80A64;
+}
+#logo img {
+  height: 40px;
+}
+h1 { 
+  color:#fff;
+  font-weight: 900;
+}
+p {
+  margin:0;
+  padding:0;
+}
+#wpcontent {
+  padding:0;
+}
+
 .superadmin-wrap {
-  max-width: 900px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  padding:20px;
+  color: #444;
 }
 
 .superadmin-wrap h1 {
   margin-bottom: 20px;
+}
+
+.boton, #submit {
+  background: #C80A64 !important;
+  border: none !important;
+  color:#fff !important;
+}
+.boton:hover, #submit:hover {
+  background: #990A4D !important;
+  color:#fff !important;
 }
 
 .superadmin-wrap table.form-table th {

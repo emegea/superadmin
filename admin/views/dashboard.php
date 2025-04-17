@@ -7,9 +7,15 @@ if (!defined('ABSPATH')) {
 $contact_info = new SuperAdmin_ContactInfo();
 ?>
 
+<div id="logo">
+    <img src="https://www.emegea.ar/iso-blanco.svg" alt="EMEGEA">            
+    <h1>emegea Superadmin</h1>
+</div>
+<?php if (isset($_GET['status'])): ?>
+<div class="notice notice-success is-dismissible">
+    <p>¡Ajustes guardados correctamente!</p>
+</div>
 <div class="wrap superadmin-wrap">
-    <h1>Configuraciones SuperAdmin</h1>
-
     <?php if (isset($_GET['message'])): ?>
         <div class="notice notice-success is-dismissible">
             <p>
@@ -26,7 +32,6 @@ $contact_info = new SuperAdmin_ContactInfo();
             </p>
         </div>
     <?php endif; ?>
-
     <div class="superadmin-columns-container" style="display:flex; gap:20px;">
         <!-- Columna 1: Información de contacto -->
         <div class="superadmin-columnaUno">
@@ -101,13 +106,13 @@ $contact_info = new SuperAdmin_ContactInfo();
                     <label>Logo del login:</label><br>
                     <img id="login-logo-preview" src="<?php echo esc_url(get_option('superadmin_login_logo_url', '')); ?>" style="max-width:100px; display:block; margin-bottom:10px;">
                     <input type="hidden" id="superadmin_login_logo_url" name="superadmin_login_logo_url" value="<?php echo esc_attr(get_option('superadmin_login_logo_url', '')); ?>">
-                    <button type="button" class="button" id="upload-login-logo">Seleccionar logo</button>
+                    <button type="button" class="button boton" id="upload-login-logo">Seleccionar logo</button>
                 </p>
                 <p>
                     <label>Imagen de fondo:</label><br>
                     <img id="login-bg-preview" src="<?php echo esc_url(get_option('superadmin_login_bg_url', '')); ?>" style="max-width:100px; display:block; margin-bottom:10px;">
                     <input type="hidden" id="superadmin_login_bg_url" name="superadmin_login_bg_url" value="<?php echo esc_attr(get_option('superadmin_login_bg_url', '')); ?>">
-                    <button type="button" class="button" id="upload-login-bg">Seleccionar imagen de fondo</button>
+                    <button type="button" class="button boton" id="upload-login-bg">Seleccionar imagen de fondo</button>
                 </p>
                 <p>
                     <label for="superadmin_login_bg_color">Color de fondo:</label><br>
@@ -260,5 +265,5 @@ $contact_info = new SuperAdmin_ContactInfo();
             });
         </script>
 
-    </div><!-- .superadmin-columns-containe -->
+    </div><!-- .superadmin-columns-container -->
 </div>
