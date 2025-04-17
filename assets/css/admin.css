@@ -17,3 +17,18 @@
   width: 100%;
   max-width: 400px;
 }
+
+.superadmin-columns-container {
+  display: flex;
+  gap: 20px;
+}
+
+.superadmin-columnaUno,
+.superadmin-columnaDos,
+.superadmin-columnaTres {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 15px;
+  background: #fff;
+  box-sizing: border-box;
+}
