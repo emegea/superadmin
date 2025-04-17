@@ -11,29 +11,13 @@ $contact_info = new SuperAdmin_ContactInfo();
     <h1>emegea Superadmin</h1>
 </div>
 
+
+<div class="wrap superadmin-wrap">
 <?php if (isset($_GET['status'])): ?>
     <div class="notice notice-success is-dismissible">
         <p>¡Ajustes guardados correctamente!</p>
     </div>
 <?php endif; ?>
-
-<div class="wrap superadmin-wrap">
-    <?php if (isset($_GET['message'])): ?>
-        <div class="notice notice-success is-dismissible">
-            <p>
-                <?php
-                switch ($_GET['message']) {
-                    case '1':
-                        echo 'Información de contacto guardada correctamente.';
-                        break;
-                    case '2':
-                        echo 'Configuración de menús guardada correctamente.';
-                        break;
-                }
-                ?>
-            </p>
-        </div>
-    <?php endif; ?>
 
     <div class="superadmin-columns-container" style="display:flex; gap:20px;">
         <!-- Columna 1 -->
