@@ -1,0 +1,19 @@
+.superadmin-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.superadmin-wrap h1 {
+  margin-bottom: 20px;
+}
+
+.superadmin-wrap table.form-table th {
+  width: 200px;
+  text-align: left;
+}
+
+.superadmin-wrap input.regular-text {
+  width: 100%;
+  max-width: 400px;
+}
