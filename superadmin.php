@@ -20,6 +20,8 @@ require_once SUPERADMIN_PATH . 'includes/class-seguridad.php';
 require_once SUPERADMIN_PATH . 'includes/contact-info.php';
 require_once SUPERADMIN_PATH . 'includes/custom-login.php';
 require_once SUPERADMIN_PATH . 'includes/menu-manager.php';
+require_once SUPERADMIN_PATH . 'includes/class-api.php';
+$superadmin_api = new SuperAdmin_API();
 
 // Inicializar clases y hooks
 add_action('plugins_loaded', function () {
