@@ -5,6 +5,7 @@ body.login {
   font-family: 'Inter', sans-serif !important;
   color: #444;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -37,18 +38,10 @@ body.login {
 }
 
 .login #loginform input.button-primary {
-  background-color: #C80A64;
   border: none;
 }
-
 .login #loginform input.button-primary:hover {
   background-color: #990A4D;
 }
 
-.login #loginform a {
-  color: #C80A64;
-}
-
-.login #loginform a:hover {
-  color: #990A4D;
-}
+.textoFooter { }

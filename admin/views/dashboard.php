@@ -120,66 +120,18 @@ $contact_info = new SuperAdmin_ContactInfo();
             <h2>Gestión de Menús por Rol</h2>
             <div class="superadmin-roles-tabs">
                 <ul class="roles-tabs-nav">
-                    <?php
+                <?php
                     global $wp_roles;
                     $roles = $wp_roles->roles;
                     foreach ($roles as $role_key => $role_info) {
-                        ?>
-                        <li><a href="#" class="role-tab-link" data-role="<?php echo esc_attr($role_key); ?>"><?php echo esc_html($role_info['name']); ?></a></li>
-                        <?php
-                    }
-                    ?>
-                </ul>
-                <?php
-                foreach ($roles as $role_key => $role_info) {
-                    $menus_guardados = get_option("superadmin_menus_{$role_key}", []);
-                    ?>
-                    <div class="role-tab-content" id="role-tab-<?php echo esc_attr($role_key); ?>" style="display:none;">
-                        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                            <?php wp_nonce_field('guardar_menu_roles', 'superadmin_nonce'); ?>
-                            <input type="hidden" name="action" value="guardar_menu_roles">
-                            <ul class="superadmin-menu-list">
-                                <?php
-                                global $menu, $submenu;
-                                foreach ($menu as $item) {
-                                    $slug = $item[2];
-                                    $name = strip_tags($item[0]);
-                                    $has_children = !empty($submenu[$slug]);
-                                    ?>
-                                    <li class="parent-menu-item<?php if ($has_children) echo ' has-children'; ?>">
-                                        <span class="menu-parent-label" style="cursor:pointer;">
-                                            <?php if ($has_children): ?><span class="toggle-icon">▶</span><?php endif; ?>
-                                            <?php echo esc_html($name); ?>
-                                        </span>
-                                        <label style="margin-left:10px;">
-                                            <input type="checkbox" name="menus_roles[<?php echo esc_attr($role_key); ?>][]" value="<?php echo esc_attr($slug); ?>" <?php checked(in_array($slug, $menus_guardados)); ?>>
-                                        </label>
-                                        <?php if ($has_children): ?>
-                                            <ul class="superadmin-submenu-list" style="display:none; margin-left:20px;">
-                                                <?php foreach ($submenu[$slug] as $subitem) {
-                                                    $subslug = $subitem[2];
-                                                    $subname = strip_tags($subitem[0]);
-                                                    ?>
-                                                    <li>
-                                                        <label>
-                                                            <input type="checkbox" name="menus_roles[<?php echo esc_attr($role_key); ?>][]" value="<?php echo esc_attr($subslug); ?>" <?php checked(in_array($subslug, $menus_guardados)); ?>>
-                                                            <?php echo esc_html($subname); ?>
-                                                        </label>
-                                                    </li>
-                                                <?php } ?>
-                                            </ul>
-                                        <?php endif; ?>
-                                    </li>
-                                    <?php
-                                }
-                                ?>
-                            </ul>
-                            <?php submit_button('Guardar Configuración de Menús'); ?>
-                        </form>
-                    </div>
-                    <?php
-                }
                 ?>
+                    <li>
+                        <a href="#" class="role-tab-link" data-role="<?php echo esc_attr($role_key); ?>">
+                            <?php echo esc_html($role_info['name']); ?>
+                        </a>
+                    </li>
+                <?php } ?>
+                </ul>
             </div>
         </div>
     </div>

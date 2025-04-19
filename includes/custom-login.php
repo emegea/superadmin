@@ -8,11 +8,16 @@ class SuperAdmin_CustomLogin {
         add_action('login_enqueue_scripts', [$this, 'cargar_estilos_login']);
         add_filter('login_headerurl', [$this, 'custom_login_url']);
         add_filter('login_headertitle', [$this, 'custom_login_title']);
+        add_action('login_footer', [$this, 'imprimir_texto_inferior']);
         add_action('admin_post_guardar_custom_login', [$this, 'guardar_opciones']);
     }
 
     public function cargar_estilos_login() {
+        // Encolar CSS básico si tienes archivo
         wp_enqueue_style('superadmin-login-style', SUPERADMIN_URL . 'assets/css/login.css', [], '1.0');
+        
+        // Inyectar CSS dinámico con opciones guardadas
+        add_action('login_head', [$this, 'imprimir_css_personalizado']);
     }
 
     public function custom_login_url() {
@@ -45,4 +50,45 @@ class SuperAdmin_CustomLogin {
         wp_redirect(admin_url('admin.php?page=superadmin&status=success'));
         exit;
     }
+
+    public function imprimir_css_personalizado() {
+        $logo_url = get_option('superadmin_login_logo_url', '');
+        $bg_url = get_option('superadmin_login_bg_url', '');
+        $bg_color = get_option('superadmin_login_bg_color', '#fff');
+        $bg_disposition = get_option('superadmin_login_bg_disposition', 'cover');
+        $button_color = get_option('superadmin_login_button_color', '#2271b1');
+        ?>
+        <style type="text/css">
+            body.login {
+                background-color: <?php echo esc_attr($bg_color); ?>;
+                <?php if ($bg_url): ?>
+                background-image: url('<?php echo esc_url($bg_url); ?>');
+                background-size: <?php echo esc_attr($bg_disposition); ?>;
+                background-repeat: no-repeat;
+                background-position: center;
+                <?php endif; ?>
+            }
+            body.login #login h1 a {
+                background-image: url('<?php echo esc_url($logo_url); ?>');
+                background-size: contain;
+                width: 320px;
+                height: 65px;
+            }
+            body.login #login form .button.wp-core-ui {
+                background-color: <?php echo esc_attr($button_color); ?>;
+                border-color: <?php echo esc_attr($button_color); ?>;
+                box-shadow: none;
+                text-shadow: none;
+            }
+            /* Puedes agregar más estilos personalizados aquí */
+        </style>
+        <?php
+    }    
+    public function imprimir_texto_inferior() {
+        $texto = get_option('superadmin_login_footer_text', '');
+        if ($texto) {
+            echo '<p class="textoFooter">' . esc_html($texto) . '</p>';
+        }
+    }
+    
 }
