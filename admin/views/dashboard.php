@@ -13,13 +13,13 @@ $contact_info = new SuperAdmin_ContactInfo();
 
 
 <div class="wrap superadmin-wrap">
-<?php if (isset($_GET['status'])): ?>
-    <div class="notice notice-success is-dismissible">
-        <p>¡Ajustes guardados correctamente!</p>
-    </div>
-<?php endif; ?>
-
+    <?php if (isset($_GET['status'])): ?>
+        <div class="notice notice-success is-dismissible">
+            <p>¡Ajustes guardados correctamente!</p>
+        </div>
+    <?php endif; ?>
     <div class="superadmin-columns-container" style="display:flex; gap:20px;">
+
         <!-- Columna 1 -->
         <div class="superadmin-columnaUno" style="flex:1; border:1px solid #ccc; padding:15px;">
             <h2>Redes Sociales y Contacto</h2>
@@ -119,21 +119,29 @@ $contact_info = new SuperAdmin_ContactInfo();
         <div class="superadmin-columnaTres" style="flex:1; border:1px solid #ccc; padding:15px;">
             <h2>Gestión de Menús por Rol</h2>
             <div class="superadmin-roles-tabs">
+                <!-- Pestañas de roles -->
                 <ul class="roles-tabs-nav">
-                <?php
-                    global $wp_roles;
-                    $roles = $wp_roles->roles;
-                    foreach ($roles as $role_key => $role_info) {
-                ?>
-                    <li>
-                        <a href="#" class="role-tab-link" data-role="<?php echo esc_attr($role_key); ?>">
-                            <?php echo esc_html($role_info['name']); ?>
-                        </a>
-                    </li>
-                <?php } ?>
+                    <?php foreach ($roles as $role_key => $role_info): ?>
+                        <li>
+                            <a href="#" 
+                            class="role-tab-link <?php echo ($role_key === array_key_first($roles)) ? 'active' : ''; ?>" 
+                            data-role="<?php echo esc_attr($role_key); ?>">
+                                <?php echo esc_html($role_info['name']); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
+
+                <!-- Contenido de cada pestaña -->
+                <?php foreach ($roles as $role_key => $role_info): ?>
+                    <div class="role-tab-content <?php echo ($role_key === array_key_first($roles)) ? 'active' : ''; ?>" 
+                        id="role-tab-<?php echo esc_attr($role_key); ?>">
+                        <!-- ... mantén el contenido actual ... -->
+                    </div>
+                <?php endforeach; ?>
             </div>
-        </div>
+        </div><!-- Columna 3 -->
+
     </div>
 </div>
 
@@ -180,25 +188,6 @@ jQuery(document).ready(function($){
             $('#login-bg-preview').attr('src', attachment.url);
         });
         bgUploader.open();
-    });
-
-    // Tabs para roles
-    $('.role-tab-link').on('click', function(e){
-        e.preventDefault();
-        var role = $(this).data('role');
-        $('.role-tab-content').hide();
-        $('#role-tab-' + role).show();
-        $('.role-tab-link').removeClass('active');
-        $(this).addClass('active');
-    });
-    $('.role-tab-link').first().trigger('click');
-
-    // Submenú desplegable al hacer click en el padre
-    $('.parent-menu-item.has-children .menu-parent-label').on('click', function(){
-        var submenu = $(this).closest('.parent-menu-item').find('.superadmin-submenu-list');
-        submenu.slideToggle();
-        var icon = $(this).find('.toggle-icon');
-        icon.text(icon.text() === '▶' ? '▼' : '▶');
     });
 });
 </script>

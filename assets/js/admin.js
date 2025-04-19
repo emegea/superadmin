@@ -50,5 +50,34 @@ jQuery(document).ready(function ($) {
         });
         bgUploader.open();
     });
-        
+
+    
+    // Tabs para roles
+        // Mostrar el primer tab al cargar
+        $('.role-tab-content').first().addClass('active');
+    
+        // Manejar clicks en los tabs
+        $('.role-tab-link').on('click', function(e) {
+            e.preventDefault();
+            const role = $(this).data('role');
+            
+            // Remover clase 'active' de todos los tabs y contenidos
+            $('.role-tab-link, .role-tab-content').removeClass('active');
+            
+            // Agregar clase 'active' al tab y contenido clickeado
+            $(this).addClass('active');
+            $('#role-tab-' + role).addClass('active');
+        });
+
+        // Para que los submenús se desplieguen al hacer clic en el ítem padre (sin botón extra):
+        $('.parent-menu-item.has-children .menu-parent-label').on('click', function() {
+            $(this).closest('.parent-menu-item').find('.superadmin-submenu-list').slideToggle();
+            $(this).find('.toggle-icon').text(function(_, text) {
+                return text === '▶' ? '▼' : '▶';
+            });
+        });
+
+
 });
+
+
